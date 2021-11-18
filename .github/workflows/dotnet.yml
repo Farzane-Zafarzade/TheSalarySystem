@@ -1,0 +1,61 @@
+name: .net
+
+on:
+  push:
+    branches: [ startMenu, userMenu, adminMenu ]
+  pull_request:
+    branches: [ master, Development ]
+ 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+
+  test:
+    name: test
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Test
+      run: dotnet test --verbosity normal
+
+  release:
+    name: Create Release
+    needs: test
+    if: github.event_name == 'pull_request' && github.event.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    environment: 
+      name: production
+      url: https://github.com/farzane-zafar/TheSalarySystem/releases
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: false
+          prerelease: false
