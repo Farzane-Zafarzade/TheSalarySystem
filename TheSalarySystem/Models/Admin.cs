@@ -81,15 +81,15 @@
         /// </summary>
         /// <param name="listOfUsers">The listOfUsers<see cref="List{IAccount}"/>.</param>
         /// <returns>The <see cref="bool"/>.</returns>
-        public override bool Delete(string UserName, string Password, List<IAccount> listOfUsers)
+        public override bool Delete(string UserName, string Password)
         {
-            foreach (var item in listOfUsers)
+            foreach (var item in StartMenu.listOfUsers)
             {
                 if (item.userName == UserName && item.password == Password)
                 {
                     if (userName != UserName && password != Password)
                     {
-                        listOfUsers.Remove(item);
+                        StartMenu.listOfUsers.Remove(item);
                         return true;
                     }
 
