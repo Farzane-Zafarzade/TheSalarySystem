@@ -15,7 +15,7 @@ namespace TheSalarySystem.Menu.Tests
     {
         
         [TestMethod()]
-        [DataRow("samwon", "123abc", "samwon")]
+        [DataRow("admin1", "admin1234", "admin1")]
         [DataRow("emmLind", "123abc", null)]
         [DataRow(null, "123abc", null)]
         [DataRow("samwon", null, null)]
