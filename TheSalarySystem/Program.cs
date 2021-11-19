@@ -1,4 +1,5 @@
 ﻿using System;
+using TheSalarySystem.Menu;
 
 namespace TheSalarySystem
 {
@@ -6,7 +7,7 @@ namespace TheSalarySystem
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            StartMenu.LogInMenu();
         }
     }
 }
