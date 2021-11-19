@@ -12,7 +12,7 @@ namespace TheSalarySystem.Models.Tests
     public class AdminTests
     {
 
-       
+
         [TestMethod()]
         [DataRow("Dennis", "Lund", "denlu", "sen123", "staff", 1200, false, -1)]
 
@@ -23,17 +23,5 @@ namespace TheSalarySystem.Models.Tests
             Assert.AreNotEqual(actual, expected);
         }
 
-        [TestMethod()]
-        [DataRow("samwon", "123abc", false)]
-        [DataRow("farzanezafar", "password", true)]
-        [DataRow(null, "password", false)]
-        [DataRow("farzanezafar", null, false)]
-
-        public void DeleteTest(string userName, string passWord, bool expected)
-        {
-            var admin = new Admin( "Sammy", "Wong", "samwon", "123abc", 23000, "staff", true);
-            var actual = admin.Delete(userName, passWord);
-            Assert.AreEqual(expected, actual);
-        }
     }
 }
