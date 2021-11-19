@@ -20,8 +20,19 @@ namespace TheSalarySystem.Models.Tests
         {
             Admin newAdmin = new();
             var actual = newAdmin.CreateUser(fname, lname, uname, pass, role, salary, isAdmin);
-            Assert.AreNotEqual(actual, expected);
+           
+            Assert.AreNotEqual(expected, actual);
         }
 
+        [TestMethod()]
+        [DataRow("samwon", "123abc", false)]
+        [DataRow("farzanezafar", "password", true)]
+
+        public void DeleteTest(string userName, string passWord, bool expected)
+        {
+            var admin = new Admin("Sammy", "Wong", "samwon", "123abc", 23000, "staff", true);
+            var actual = admin.Delete(userName, passWord);
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

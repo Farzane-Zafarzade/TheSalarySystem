@@ -13,8 +13,8 @@ namespace TheSalarySystem.Menu
         /// <summary>
         /// A list of accounts
         /// </summary>
-        public static List<IAccount> listOfUsers = new List<IAccount> { new Admin { firstName = "Sammy", lastName = "Wong", userName = "samwon", password = "123abc", salary = 23000, role = "staff", isAdmin = true },
-                                                                        new User { firstName = "Farzane", lastName = "Zafar", userName = "farzanezafar", password = "password", salary = 54000, role = "manager", isAdmin = false },
+        public static List<IAccount> listOfUsers = new List<IAccount> { new Admin { firstName = "Sammy", lastName = "Wong", userName = "admin1", password = "admin1234", salary = 23000, role = "adminstrator", isAdmin = true },
+                                                                        new User { firstName = "Farzane", lastName = "Zafar", userName = "farzanezafar", password = "password1", salary = 54000, role = "manager", isAdmin = false },
                                                                         new User { firstName = "David", lastName = "Berg", userName = "davidberg", password = "david123", salary = 34000, role = "staff", isAdmin = false }};
 
 
