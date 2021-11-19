@@ -12,7 +12,10 @@ namespace TheSalarySystem.Models.Tests
     public class UserTests
     {
         [TestMethod()]
-        [DataRow("farzanezafar", "password",true)]
+        [DataRow("samwon", "123abc", false)]
+        [DataRow("farzanezafar", "password", true)]
+        [DataRow(null, "password",false)]
+        [DataRow("farzanezafar", null, false)]
         public void DeleteTest(string userName, string passWord, bool expected)
         {
             var user = new User("Farzane", "Zafar", "farzanezafar", "password", 54000, "manager", false);
