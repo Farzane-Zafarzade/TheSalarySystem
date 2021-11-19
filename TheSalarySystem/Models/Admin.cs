@@ -143,6 +143,7 @@
             }
 
             ShowSelectedOption(choice);
+            
         }
 
         /// <summary>

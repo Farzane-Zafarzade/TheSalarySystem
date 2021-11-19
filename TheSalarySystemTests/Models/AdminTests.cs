@@ -11,7 +11,7 @@ namespace TheSalarySystem.Models.Tests
     [TestClass()]
     public class AdminTests
     {
-
+        
 
         [TestMethod()]
         [DataRow("Dennis", "Lund", "denlu", "sen123", "staff", 1200, false, -1)]
@@ -45,5 +45,6 @@ namespace TheSalarySystem.Models.Tests
             var actual = admin.Delete(userName, passWord);
             Assert.AreEqual(expected, actual);
         }
+
     }
 }

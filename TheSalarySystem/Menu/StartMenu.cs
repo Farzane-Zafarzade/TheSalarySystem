@@ -70,21 +70,25 @@ namespace TheSalarySystem.Menu
         /// if account is an admin account displays admin's menu
         /// </summary>
         /// <param name="userName">user name</param>
-        public static void ShowMenu(IAccount account)
+        public static bool ShowMenu(IAccount account)
         {
             if (account != null)
             {
-                Console.Clear();
-                account.ShowRole();
-                account.ShowSalary();
-                account.Menu();
+               Console.Clear();
+               account.ShowRole();
+               account.ShowSalary();
+               account.Menu();
+               return true;
             }
+           
             else
             {
                 Console.WriteLine("\n Invalid user name and password, try again: ");
                 Console.ReadKey();
                 LogInMenu();
+                return false;
             }
+            
         }
     }
 }
