@@ -177,7 +177,7 @@
 
                 case 3:
                     Console.Clear();
-                    if (DeleteAccount(StartMenu.listOfUsers))
+                    if (DeleteAccount())
                     {
                         Console.WriteLine("\n The account has been deleted successfully.");
                     }
