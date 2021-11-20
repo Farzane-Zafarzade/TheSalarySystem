@@ -7,7 +7,6 @@ namespace TheSalarySystem
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello");
             StartMenu.LogInMenu();
         }
     }
