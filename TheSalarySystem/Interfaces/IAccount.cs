@@ -25,14 +25,18 @@
         /// <summary>
         /// Deletes an account
         /// </summary>
-        /// <param name="listOfUsers">The listOfUsers<see cref="List{IAccount}"/>.</param>
         /// <returns>The <see cref="bool"/>.</returns>
-        public bool DeleteAccount(List<IAccount> listOfUsers);
+        public bool DeleteAccount();
 
         /// <summary>
         /// Shows the account menu.
         /// </summary>
         /// <param name="listOfUsers">The listOfUsers<see cref="List{IAccount}"/>.</param>
         public void Menu();
+
+        /// <summary>
+        /// Shows the account menu.
+        /// </summary>
+        public bool Delete(string userName, string password);
     }
 }
