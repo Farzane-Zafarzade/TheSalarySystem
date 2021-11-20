@@ -7,15 +7,31 @@
 
     public class Admin : User, IAccount
     {
+        public Admin(string firstName, string lastName, string userName, string passWord, int salary, string role, bool IsAdmin)
+        {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.userName = userName;
+            this.password = passWord;
+            this.salary = salary;
+            this.role = role;
+            this.isAdmin = isAdmin;
+        }
+
+        public Admin()
+        {
+
+        }
+
         /// <summary>
         /// Lists all user that exit in list of users (data base)
         /// </summary>
         /// <param name="lisOfUsers">The lisOfUsers<see cref="List{IAccount}"/>.</param>
-        public bool ListUsers(List<IAccount> lisOfUsers)
+        public bool ListUsers()
         {
-            if (lisOfUsers != null)
+            if (StartMenu.listOfUsers != null)
             {
-                foreach (var user in lisOfUsers)
+                foreach (var user in StartMenu.listOfUsers)
                 {
                     Console.WriteLine("User name: {0}, Password: {1}", user.userName, user.password);
                 }
@@ -30,11 +46,19 @@
         /// If new user added successfully it returns index of new user in the list, else returns -1.
         /// </summary>
         /// <param name="users">The users<see cref="List{IAccount}"/>.</param>
-        public int CreateUser(List<IAccount> listOfUsers)
+        public int CreateUser(string fname,string lname, string uname, string pass, string role, int salary, bool isAdmin)
         {
-            User newUser = SetUser();
-            listOfUsers.Add(newUser);
-            int index = listOfUsers.IndexOf(newUser);
+            User newUser = new();
+            newUser.firstName = fname;
+            newUser.lastName = lname;
+            newUser.userName = uname;
+            newUser.password = pass;
+            newUser.role = role;
+            newUser.salary = salary;
+            newUser.isAdmin = isAdmin;
+
+            StartMenu.listOfUsers.Add(newUser);
+            int index = StartMenu.listOfUsers.IndexOf(newUser);
             return index;
         }
 
@@ -42,28 +66,26 @@
         /// Takes data from user and create a new user.
         /// </summary>
         /// <returns>The <see cref="User"/>.</returns>
-        public User SetUser()
+        public int SetUser()
         {
-            User newUser = new();
             Console.Write("\n Enter first name:");
-            newUser.firstName = Console.ReadLine();
+            string fname = Console.ReadLine();
             Console.Write("\n Enter last name: ");
-            newUser.lastName = Console.ReadLine();
+            string lname = Console.ReadLine();
             Console.Write("\n Enter username:");
-            string userName = Console.ReadLine();
+            string uname = Console.ReadLine();
             foreach (var user in StartMenu.listOfUsers)
             {
-                while (user.userName == userName)
+                while (user.userName==uname)
                 {
                     Console.WriteLine("\n Username is taken, choose another username");
-                    userName = Console.ReadLine();
+                    uname = Console.ReadLine();
                 }
-                newUser.userName = userName;
             }
             Console.Write("\n Enter password: ");
-            newUser.password = Console.ReadLine();
+            string pass = Console.ReadLine();
             Console.Write("\n Enter role:");
-            newUser.role = Console.ReadLine();
+            string Role = Console.ReadLine();
             Console.Write("\n Enter salary: ");
             var _int = int.TryParse(Console.ReadLine(), out int Salary);
             while (_int == false)
@@ -71,8 +93,10 @@
                 Console.Write("\n Invalid data, Enter a number: ");
                 _int = int.TryParse(Console.ReadLine(), out Salary);
             }
-            newUser.salary = Salary;
-            return newUser;
+            int salary = Salary;
+
+            return CreateUser(fname, lname, uname, pass, Role, salary, false);
+            
         }
 
         /// <summary>
@@ -81,15 +105,15 @@
         /// </summary>
         /// <param name="listOfUsers">The listOfUsers<see cref="List{IAccount}"/>.</param>
         /// <returns>The <see cref="bool"/>.</returns>
-        public override bool Delete(string UserName, string Password, List<IAccount> listOfUsers)
+        public override bool Delete(string UserName, string Password)
         {
-            foreach (var item in listOfUsers)
+            foreach (var item in StartMenu.listOfUsers)
             {
                 if (item.userName == UserName && item.password == Password)
                 {
                     if (userName != UserName && password != Password)
                     {
-                        listOfUsers.Remove(item);
+                        StartMenu.listOfUsers.Remove(item);
                         return true;
                     }
 
@@ -119,6 +143,7 @@
             }
 
             ShowSelectedOption(choice);
+            
         }
 
         /// <summary>
@@ -132,13 +157,13 @@
             {
                 case 1:
                     Console.Clear();
-                    ListUsers(StartMenu.listOfUsers);
+                    ListUsers();
                     BackToMenu();
                     break;
 
                 case 2:
                     Console.Clear();
-                    if (CreateUser(StartMenu.listOfUsers) != -1)
+                    if (SetUser() != -1)
                     {
                         Console.WriteLine("\n The User added successfully.");
                     }

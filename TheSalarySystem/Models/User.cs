@@ -28,6 +28,7 @@
 
         }
 
+        
         public User(string firstName, string lastName, string userName, string passWord, int salary, string role, bool IsAdmin)
         {
             this.firstName = firstName;
@@ -68,7 +69,7 @@
             string username = Console.ReadLine();
             Console.Write("\n Password: ");
             string passWord = Console.ReadLine();
-            return (Delete(username, passWord, listOfUsers));
+            return (Delete(username, passWord));
         }
 
         /// <summary>
@@ -77,15 +78,15 @@
         /// </summary>
         /// <param name="listOfUsers">The listOfUsers<see cref="List{IAccount}"/>.</param>
         /// <returns>The <see cref="bool"/>.</returns>
-        public virtual bool Delete(string UserName, string Password, List<IAccount> listOfUsers)
+        public virtual bool Delete(string UserName, string Password)
         {
-            foreach (var item in listOfUsers)
+            foreach (var item in StartMenu.listOfUsers)
             {
                 if (item.userName == UserName && item.password == Password)
                 {
                     if (userName == UserName && password == Password)
                     {
-                        listOfUsers.Remove(item);
+                        StartMenu.listOfUsers.Remove(item);
                         return true;
                     }
                 }
@@ -159,5 +160,6 @@
             Console.Clear();
             StartMenu.LogInMenu();
         }
+
     }
 }
