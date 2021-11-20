@@ -62,7 +62,7 @@
         /// </summary>
         /// <param name="listOfUsers">The listOfUsers<see cref="List{IAccount}"/>.</param>
         /// <returns>The <see cref="bool"/>.</returns>
-        public bool DeleteAccount(List<IAccount> listOfUsers)
+        public bool DeleteAccount()
         {
             Console.WriteLine("\n Enter user name and password to delete the account.");
             Console.Write("\n User name: ");
@@ -124,7 +124,7 @@
             switch (choice)
             {
                 case 1:
-                    if (DeleteAccount(StartMenu.listOfUsers))
+                    if (DeleteAccount())
                     {
                         Console.WriteLine("\n Your account has been deleted successfully.");
                         Console.ReadKey();
@@ -137,7 +137,7 @@
                         Console.Write("\n Try again? (y/n): ");
                         if (Console.ReadLine().Trim().ToLower() == "y")
                         {
-                            DeleteAccount(StartMenu.listOfUsers);
+                            DeleteAccount();
                         }
                         else
                         {
