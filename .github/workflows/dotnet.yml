@@ -37,8 +37,7 @@ jobs:
   release:
     name: Create Release
     needs: [build, test]
-    if: |
-       github.event_name == 'pull_request' && github.head_ref == 'master'
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     environment: 
       name: production
