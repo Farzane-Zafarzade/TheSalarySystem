@@ -12,15 +12,7 @@
 
         public string password { get; set; }
 
-        /// <summary>
-        /// Shows the salary
-        /// </summary>
-        public void ShowSalary();
-
-        /// <summary>
-        /// Shows the role
-        /// </summary>
-        public void ShowRole();
+        public bool Delete(string userName, string password);
 
         /// <summary>
         /// Deletes an account
@@ -31,12 +23,16 @@
         /// <summary>
         /// Shows the account menu.
         /// </summary>
-        /// <param name="listOfUsers">The listOfUsers<see cref="List{IAccount}"/>.</param>
         public void Menu();
 
         /// <summary>
-        /// Shows the account menu.
+        /// Shows the role
         /// </summary>
-        public bool Delete(string userName, string password);
+        public void ShowRole();
+
+        /// <summary>
+        /// Shows the salary
+        /// </summary>
+        public void ShowSalary();
     }
 }

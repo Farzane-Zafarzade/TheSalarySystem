@@ -17,6 +17,41 @@ namespace TheSalarySystem.Menu
                                                                         new User { firstName = "Farzane", lastName = "Zafar", userName = "farzanezafar", password = "password1", salary = 54000, role = "manager", isAdmin = false },
                                                                         new User { firstName = "David", lastName = "Berg", userName = "davidberg", password = "david123", salary = 34000, role = "staff", isAdmin = false }};
 
+        /// <summary>
+        /// Method for getting the kind of account.
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns>Object of IAccount</returns>
+        public static IAccount GetUser(string userName)
+        {
+            IAccount newUser = null;
+            foreach (var user in listOfUsers)
+            {
+                if (user.userName == userName)
+                {
+                    newUser = user;
+                }
+            }
+            return newUser;
+        }
+
+        /// <summary>
+        /// log in method 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns>The account object if login successed, return null if not.</returns>
+        public static string Login(string userName, string password)
+        {
+            foreach (var user in listOfUsers)
+            {
+                if (user.userName == userName && user.password == password)
+                {
+                    return user.userName;
+                }
+            }
+            return null;
+        }
 
         /// <summary>
         /// Shows Log in menu and user enter username and password
@@ -33,43 +68,13 @@ namespace TheSalarySystem.Menu
             string newUser = Login(userName, passWord);
             ShowMenu(GetUser(newUser));
         }
-
-        /// <summary>
-        /// log in method 
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="password"></param>
-        /// <returns>The accoun object if login successed, return null if not.</returns>
-        public static string Login(string userName, string password)
-        {
-            foreach (var user in listOfUsers)
-            {
-                if (user.userName == userName && user.password == password)
-                {
-                    return user.userName;
-                }
-            }
-            return null;
-        }
-
-        public static IAccount GetUser(string userName)
-        {
-            IAccount newUser = null;
-            foreach (var user in listOfUsers)
-            {
-                if (user.userName == userName)
-                {
-                    newUser = user;
-                }
-            }
-            return newUser;
-        }
-
+        
         /// <summary>
         /// if account is a user account displays user's menu
         /// if account is an admin account displays admin's menu
         /// </summary>
-        /// <param name="userName">user name</param>
+        /// <param name="account">Object of IAccount</param>
+        /// <returns></returns>
         public static bool ShowMenu(IAccount account)
         {
             if (account != null)
@@ -80,7 +85,6 @@ namespace TheSalarySystem.Menu
                account.Menu();
                return true;
             }
-           
             else
             {
                 Console.WriteLine("\n Invalid user name and password, try again: ");
@@ -88,7 +92,6 @@ namespace TheSalarySystem.Menu
                 LogInMenu();
                 return false;
             }
-            
         }
     }
 }
