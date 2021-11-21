@@ -24,29 +24,40 @@
         }
 
         /// <summary>
-        /// Lists all user that exit in list of users (data base)
+        /// Returns to main menu or exits the program.
         /// </summary>
-        /// <param name="lisOfUsers">The lisOfUsers<see cref="List{IAccount}"/>.</param>
-        public bool ListUsers()
+        private void BackToMenu()
         {
-            if (StartMenu.listOfUsers != null)
-            {
-                foreach (var user in StartMenu.listOfUsers)
-                {
-                    Console.WriteLine("User name: {0}, Password: {1}", user.userName, user.password);
-                }
-                return true;
-            }
-            return false;
+            Console.Write("\n Do you want to back to menu: (y/n)  ");
+            string input = Console.ReadLine().Trim().ToLower();
 
+            if (input == "y")
+            {
+                Menu();
+            }
+            else if (input == "n")
+            {
+                System.Environment.Exit(1);
+            }
+            else
+            {
+                Console.Write("\n Invalid input, enter 'y' or 'n': ");
+                input = Console.ReadLine().ToLower().Trim();
+            }
         }
 
         /// <summary>
         /// Creates a new user and adds to list of users.
-        /// If new user added successfully it returns index of new user in the list, else returns -1.
         /// </summary>
-        /// <param name="users">The users<see cref="List{IAccount}"/>.</param>
-        public int CreateUser(string fname,string lname, string uname, string pass, string role, int salary, bool isAdmin)
+        /// <param name="fname">first name</param>
+        /// <param name="lname">last name</param>
+        /// <param name="uname">username</param>
+        /// <param name="pass">password</param>
+        /// <param name="role">role</param>
+        /// <param name="salary">salary</param>
+        /// <param name="isAdmin">true if admin, false if user</param>
+        /// <returns>If new user added successfully it returns index of new user in the list, else returns -1.</returns>
+        public int CreateUser(string fname, string lname, string uname, string pass, string role, int salary, bool isAdmin)
         {
             User newUser = new();
             newUser.firstName = fname;
@@ -63,9 +74,72 @@
         }
 
         /// <summary>
+        /// Deletes user's account.
+        /// Checks whether username and password belong to the user then deletes the account if exists in the list of users.
+        /// </summary>
+        /// <param name="UserName"></param>
+        /// <param name="Password"></param>
+        /// <returns>True if the user has sucessfully deleted, false if not.</returns>
+        public override bool Delete(string UserName, string Password)
+        {
+            foreach (var item in StartMenu.listOfUsers)
+            {
+                if (item.userName == UserName && item.password == Password)
+                {
+                    if (userName != UserName && password != Password)
+                    {
+                        StartMenu.listOfUsers.Remove(item);
+                        return true;
+                    }
+
+                    return false;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Lists all user that exit in list of users (data base)
+        /// </summary>
+        /// <returns>False if the list is null, true if not.</returns>
+        public bool ListUsers()
+        {
+            if (StartMenu.listOfUsers != null)
+            {
+                foreach (var user in StartMenu.listOfUsers)
+                {
+                    Console.WriteLine("User name: {0}, Password: {1}", user.userName, user.password);
+                }
+                return true;
+            }
+            return false;
+
+        }
+
+        /// <summary>
+        /// Shows the admin's menu
+        /// </summary>
+        public override void Menu()
+        {
+            Console.WriteLine("------------");
+            Console.WriteLine("[1] List all users");
+            Console.WriteLine("[2] Create new user account");
+            Console.WriteLine("[3] Delete user account");
+            Console.WriteLine("[4] Logout");
+            Console.Write("Select an option: ");
+            _ = int.TryParse(Console.ReadLine(), out int choice);
+            while (choice != 1 && choice != 2 && choice != 3 && choice != 4)
+            {
+                Console.Write("\n Invalid input, try again: ");
+                _ = int.TryParse(Console.ReadLine(), out choice);
+            }
+            ShowSelectedOption(choice);
+        }
+
+        /// <summary>
         /// Takes data from user and create a new user.
         /// </summary>
-        /// <returns>The <see cref="User"/>.</returns>
+        /// <returns>If new user added successfully it returns index of new user in the list, else returns -1.</returns>
         public int SetUser()
         {
             Console.Write("\n Enter first name:");
@@ -96,61 +170,12 @@
             int salary = Salary;
 
             return CreateUser(fname, lname, uname, pass, Role, salary, false);
-            
         }
-
-        /// <summary>
-        /// Deletes user's account.
-        /// Checks whether username and password belong to the user then deletes the account if exists in the list of users.
-        /// </summary>
-        /// <param name="listOfUsers">The listOfUsers<see cref="List{IAccount}"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
-        public override bool Delete(string UserName, string Password)
-        {
-            foreach (var item in StartMenu.listOfUsers)
-            {
-                if (item.userName == UserName && item.password == Password)
-                {
-                    if (userName != UserName && password != Password)
-                    {
-                        StartMenu.listOfUsers.Remove(item);
-                        return true;
-                    }
-
-                    return false;
-                }
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Shows the admin's menu
-        /// </summary>
-        /// <param name="listOfUsers">The listOfUsers<see cref="List{IAccount}"/>.</param>
-        public override void Menu()
-        {
-            Console.WriteLine("------------");
-            Console.WriteLine("[1] List all users");
-            Console.WriteLine("[2] Create new user account");
-            Console.WriteLine("[3] Delete user account");
-            Console.WriteLine("[4] Logout");
-            Console.Write("Select an option: ");
-            _ = int.TryParse(Console.ReadLine(), out int choice);
-            while (choice != 1 && choice != 2 && choice != 3 && choice != 4)
-            {
-                Console.Write("\n Invalid input, try again: ");
-                _ = int.TryParse(Console.ReadLine(), out choice);
-            }
-
-            ShowSelectedOption(choice);
-            
-        }
-
+        
         /// <summary>
         /// Shows the selected option in admin's menu
         /// </summary>
         /// <param name="choice">The choice<see cref="int"/>.</param>
-        /// <param name="listOfUsers">The listOfUsers<see cref="List{IAccount}"/>.</param>
         private void ShowSelectedOption(int choice)
         {
             switch (choice)
@@ -192,30 +217,6 @@
                     Console.Clear();
                     LogOut();
                     break;
-            }
-        }
-
-        /// <summary>
-        /// Returns to main menu or exits the program.
-        /// </summary>
-        /// <param name="listOfUsers">The listOfUsers<see cref="List{IAccount}"/>.</param>
-        private void BackToMenu()
-        {
-            Console.Write("\n Do you want to back to menu: (y/n)  ");
-            string input = Console.ReadLine().Trim().ToLower();
-
-            if (input == "y")
-            {
-                Menu();
-            }
-            else if (input == "n")
-            {
-                System.Environment.Exit(1);
-            }
-            else
-            {
-                Console.Write("\n Invalid input, enter 'y' or 'n': ");
-                input = Console.ReadLine().ToLower().Trim();
             }
         }
     }
